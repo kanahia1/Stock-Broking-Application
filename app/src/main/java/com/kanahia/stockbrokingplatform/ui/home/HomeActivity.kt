@@ -30,6 +30,10 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var recentlySearchedAdapter: RecentlySearchedAdapter
     private val viewModel: HomeViewModel by viewModels()
 
+    // Track loading states
+    private var gainersLoaded = false
+    private var losersLoaded = false
+
     private val navigateToDetailsScreen: (StockModel) -> Unit = {
         val intent = Intent(this@HomeActivity, DetailsActivity::class.java)
         intent.putExtra(Constants.STOCK, it.ticker)
@@ -60,14 +64,26 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initial view states - show loading
+        binding.loadingContainer.visibility = View.VISIBLE
+        binding.contentContainer.visibility = View.GONE
+        binding.lLrecentlySearched.visibility = View.GONE
+
         setupRecentlySearched()
         setupClickListeners()
         setupRecyclerViews()
         observeViewModel()
     }
 
-    private fun setupRecyclerViews() {
+    private fun checkLoadingComplete() {
+        if (gainersLoaded && losersLoaded) {
+            // Both sections are loaded, show content and hide loading
+            binding.loadingContainer.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
+        }
+    }
 
+    private fun setupRecyclerViews() {
         binding.rvTopGainers.apply {
             layoutManager = GridLayoutManager(this@HomeActivity, 2)
             adapter = gainersAdapter
@@ -94,9 +110,9 @@ class HomeActivity : AppCompatActivity() {
         // Observe recent stocks from ViewModel
         lifecycleScope.launch {
             viewModel.recentStocksState.collectLatest { recentStocks ->
-                if (recentStocks.isEmpty()){
+                if (recentStocks.isEmpty()) {
                     binding.lLrecentlySearched.visibility = View.GONE
-                }else{
+                } else {
                     binding.lLrecentlySearched.visibility = View.VISIBLE
                     recentlySearchedAdapter.submitList(recentStocks)
                 }
@@ -109,10 +125,14 @@ class HomeActivity : AppCompatActivity() {
             viewModel.fourTopGainersState.collectLatest { state ->
                 when (state) {
                     is HomeViewModel.UiState.Loading -> {
-                        // Show loading if needed
+                        gainersLoaded = false
+                        binding.loadingContainer.visibility = View.VISIBLE
+                        binding.contentContainer.visibility = View.GONE
                     }
                     is HomeViewModel.UiState.Success -> {
                         gainersAdapter.submitList(state.data)
+                        gainersLoaded = true
+                        checkLoadingComplete()
 
                         // Load chart data for first gainer item
                         state.data.firstOrNull()?.let { stock ->
@@ -121,6 +141,8 @@ class HomeActivity : AppCompatActivity() {
                     }
                     is HomeViewModel.UiState.Error -> {
                         Toast.makeText(this@HomeActivity, state.message, Toast.LENGTH_SHORT).show()
+                        gainersLoaded = true
+                        checkLoadingComplete()
                     }
                 }
             }
@@ -130,10 +152,14 @@ class HomeActivity : AppCompatActivity() {
             viewModel.fourTopLosersState.collectLatest { state ->
                 when (state) {
                     is HomeViewModel.UiState.Loading -> {
-                        // Show loading if needed
+                        losersLoaded = false
+                        binding.loadingContainer.visibility = View.VISIBLE
+                        binding.contentContainer.visibility = View.GONE
                     }
                     is HomeViewModel.UiState.Success -> {
                         losersAdapter.submitList(state.data)
+                        losersLoaded = true
+                        checkLoadingComplete()
 
                         // Load chart data for first loser item after gainers are processed
                         state.data.firstOrNull()?.let { stock ->
@@ -142,6 +168,8 @@ class HomeActivity : AppCompatActivity() {
                     }
                     is HomeViewModel.UiState.Error -> {
                         Toast.makeText(this@HomeActivity, state.message, Toast.LENGTH_SHORT).show()
+                        losersLoaded = true
+                        checkLoadingComplete()
                     }
                 }
             }

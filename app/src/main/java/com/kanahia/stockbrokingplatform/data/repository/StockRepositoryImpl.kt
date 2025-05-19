@@ -113,8 +113,7 @@ class StockRepositoryImpl @Inject constructor(
 
     override suspend fun searchStocks(query: String): StockSearchResponse {
         return apiService.searchStocks(
-            keywords = query,
-            apiKey = Constants.API_KEY
+            keywords = query
         )
     }
 
@@ -133,13 +132,11 @@ class StockRepositoryImpl @Inject constructor(
     override suspend fun getStockDetails(symbol: String): StockDetailModel {
         return withContext(Dispatchers.IO) {
             val overviewResponse = apiService.getStockOverview(
-                symbol = symbol,
-                apiKey = Constants.API_KEY
+                symbol = symbol
             )
 
             val quoteResponse = apiService.getStockQuote(
-                symbol = symbol,
-                apiKey = Constants.API_KEY
+                symbol = symbol
             )
 
             val globalQuote = quoteResponse["Global Quote"] as? Map<*, *> ?: emptyMap<String, Any>()
