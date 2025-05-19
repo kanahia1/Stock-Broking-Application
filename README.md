@@ -1,5 +1,8 @@
 # Stock Broking Application
 
+## Problem Statement
+Create an Android application for a stocks/ETFs broking platform using Kotlin.
+
 ## Tasks Completed
 
 - [x] Created an Explore Screen with sections: Recently Searched, Top Gainers, and Losers.
