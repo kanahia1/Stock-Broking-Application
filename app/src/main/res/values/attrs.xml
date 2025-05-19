@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PriceProgressBar">
+        <attr name="minPrice" format="float" />
+        <attr name="maxPrice" format="float" />
+        <attr name="currentPrice" format="float" />
+        <attr name="trackHeight" format="dimension" />
+        <attr name="thumbSize" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="triangleSize" format="dimension" />
+        <attr name="trackColor" format="color" />
+        <attr name="thumbColor" format="color" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+</resources>

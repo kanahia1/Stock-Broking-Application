@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Stock Avatar -->
+        <TextView
+            android:id="@+id/tvStockAvatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="A" />
+
+        <!-- Stock Symbol -->
+        <TextView
+            android:id="@+id/tvStockSymbol"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintEnd_toStartOf="@+id/tvStockPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvStockAvatar"
+            app:layout_constraintTop_toTopOf="@+id/tvStockAvatar"
+            tools:text="AAPL" />
+
+        <!-- Company Name -->
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintEnd_toStartOf="@+id/tvStockChange"
+            app:layout_constraintStart_toEndOf="@+id/tvStockAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/tvStockSymbol"
+            tools:text="Apple Inc." />
+
+        <!-- Stock Price -->
+        <TextView
+            android:id="@+id/tvStockPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvStockAvatar"
+            tools:text="$120.22" />
+
+        <!-- Stock Change Amount and Percent -->
+        <TextView
+            android:id="@+id/tvStockChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvStockPrice"
+            tools:text="-$12.22 (4.2%)"
+            tools:textColor="@android:color/holo_red_dark" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

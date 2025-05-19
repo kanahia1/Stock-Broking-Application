@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/topBarDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="@id/main">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="Stock Details"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/stockDetailsCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/topBarDetails">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_background"
+            android:padding="12dp">
+
+            <!-- Stock Avatar -->
+            <TextView
+                android:id="@+id/tvStockAvatar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/details_circle_background"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="A" />
+
+            <!-- Stock Symbol -->
+            <TextView
+                android:id="@+id/tvStockSymbol"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvStockPrice"
+                app:layout_constraintStart_toEndOf="@+id/tvStockAvatar"
+                app:layout_constraintTop_toTopOf="@+id/tvStockAvatar"
+                tools:text="AAPL" />
+
+            <!-- Company Name -->
+            <TextView
+                android:id="@+id/tvCompanyName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/tvStockAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvStockSymbol"
+                tools:text="Apple Inc." />
+
+            <!-- Stock Price -->
+            <TextView
+                android:id="@+id/tvStockPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvStockAvatar"
+                tools:text="$120.22" />
+
+            <!-- Stock Change Amount and Percent -->
+            <TextView
+                android:id="@+id/tvPriceChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStockPrice"
+                tools:text="-$12.22 (4.2%)"
+                tools:textColor="@android:color/holo_red_dark" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stockDetailsCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollContraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/timeFrameChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_1d"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="1D"
+                        android:textColor="@drawable/chip_text_selector"
+                        android:textColorHint="#919191"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_7d"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7D"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_1m"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1M"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_3m"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3M"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_6m"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6M"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_1y"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1Y"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+            <com.yabu.livechart.view.LiveChart
+                android:id="@+id/stock_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                app:baselineColor="@color/material_dynamic_secondary0"
+                app:baselineStrokeWidth="1dp"
+                app:labelTextColor="@android:color/black"
+                app:labelTextHeight="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                app:pathColor="@color/gray"
+                app:pathStrokeWidth="2dp" />
+            <LinearLayout
+                android:id="@+id/overviewLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/details_overview_background"
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stock_chart">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="left"
+                        android:text="Overview"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
+
+                    <ImageButton
+                        android:id="@+id/wishlistButton"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_add_wishlist"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Open"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/openTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="$14.20" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Day Low"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/dayLowTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="$14.20" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Day High"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/dayHighTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="$14.20" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="52 Week Low"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/fiftyTwoLowTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="$14.20" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.kanahia.stockbrokingplatform.utils.PriceProgressBar
+                            android:id="@+id/priceProgressBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="24dp"
+                            app:currentPrice="15.22"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:maxPrice="16.20"
+                            app:minPrice="14.20"
+                            app:textColor="#333333"
+                            app:textSize="14sp"
+                            app:thumbColor="#888888"
+                            app:thumbSize="12dp"
+                            app:trackColor="#DDDDDD"
+                            app:trackHeight="4dp"
+                            app:triangleSize="4dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="52 Week High"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/fiftyTwoHighTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="$14.20" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/overviewLl">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/detailsFrameChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_summary"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Summary"
+                        android:textColor="@drawable/chip_text_selector"
+                        android:textColorHint="#919191"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_details"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Details"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_news"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="News"
+                        android:textColor="@drawable/chip_text_selector"
+                        app:chipBackgroundColor="@drawable/chip_background_selector"
+                        app:chipCornerRadius="16dp"
+                        app:chipMinHeight="48dp"
+                        android:visibility="gone"
+                        app:chipMinTouchTargetSize="48dp"
+                        app:chipStrokeWidth="0dp"
+                        app:textEndPadding="12dp"
+                        app:textStartPadding="12dp" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/horizontalScrollView2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Stock Icon Circle -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStockIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#F0F0F0"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvStockSymbol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="A" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Stock Name and Company -->
+
+        <TextView
+            android:id="@+id/tvStockName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintStart_toEndOf="@+id/cardStockIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="AAPL" />
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="#757575"
+            android:textSize="10sp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintStart_toEndOf="@+id/cardStockIcon"
+            app:layout_constraintTop_toBottomOf="@+id/tvStockName"
+            tools:text="Apple Inc." />
+
+        <!-- Stock Price and Change -->
+
+        <!-- Stock Chart -->
+
+        <TextView
+            android:id="@+id/tvStockPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="1dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintEnd_toStartOf="@+id/stockChart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardStockIcon"
+            tools:text="$130.22" />
+
+        <TextView
+            android:id="@+id/tvPercentChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:textColor="#E53935"
+            android:textSize="10sp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvStockPrice"
+            tools:text="-4.2%" />
+
+        <com.yabu.livechart.view.LiveChart
+            android:id="@+id/stockChart"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvStockPrice"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompanyName"
+            app:pathColor="#E53935"
+            app:pathStrokeWidth="2dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
