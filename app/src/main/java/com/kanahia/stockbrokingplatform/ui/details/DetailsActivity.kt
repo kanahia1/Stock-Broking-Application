@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -44,15 +46,31 @@ class DetailsActivity : AppCompatActivity() {
         observeStockDetails()
         setupChartButtons()
         setupWishlistButton()
+        setupLoadingState()
 
         stockSymbol = intent.getStringExtra(Constants.STOCK) ?: "IBM"
         viewModel.loadStockDetails(stockSymbol)
     }
 
+    private fun setupLoadingState() {
+        showLoading(true)
 
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.loadingContainer.visibility = View.VISIBLE
+            binding.contentContainer.visibility = View.GONE
+        } else {
+            binding.loadingContainer.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
+        }
+    }
 
     private fun observeStockDetails() {
-
         lifecycleScope.launch {
             viewModel.stockDetails.collect { stockDetail ->
                 stockDetail?.let {
@@ -75,16 +93,15 @@ class DetailsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.isLoading.collect { isLoading ->
-                // Show/hide loading indicator
-                // binding.progressBar.isVisible = isLoading
+                showLoading(isLoading)
             }
         }
 
         lifecycleScope.launch {
             viewModel.error.collect { errorMessage ->
                 errorMessage?.let {
-                    // Show error message
-                    // Toast.makeText(this@StockDetailActivity, it, Toast.LENGTH_LONG).show()
+                    showLoading(false)
+                     Toast.makeText(this@DetailsActivity, it, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -175,7 +192,6 @@ class DetailsActivity : AppCompatActivity() {
             priceProgressBar.currentPrice = stockDetail.price.toFloat()
             priceProgressBar.maxPrice = stockDetail.weekHigh52.toFloat()
             priceProgressBar.minPrice = stockDetail.weekLow52.toFloat()
-
         }
     }
 
@@ -248,7 +264,6 @@ class DetailsActivity : AppCompatActivity() {
             viewModel.toggleWishlistStatus()
         }
 
-        // Observe the wishlist state
         lifecycleScope.launch {
             viewModel.isWishlisted.collect { isWishlisted ->
                 if (isWishlisted) {
